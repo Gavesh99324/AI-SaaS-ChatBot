@@ -2,6 +2,27 @@ import express from 'express';
 
 const app = express();
 
+// GET -  
+// PUT -
+// POST -
+// DELETE -
+
+// Routes
+
+app.get('/hello', (req, res, next) => {
+    return res.send("Hello")
+});
+
+
 app.listen(5000, () => console.log("Server Open"));
+
+
+
+
+
+
+
+
+
 
 
