@@ -1,19 +1,13 @@
 import express from 'express';
-
+import { config } from '.env';
+config()
 const app = express();
 
-// GET -  
-// PUT -
-// POST -
-// DELETE -
-
-// Routes
-
-app.get('/hello', (req, res, next) => {
-    return res.send("Hello")
-});
+// Middlewares
+app.use(express.json());
 
 
+// Connections and  Listeners
 app.listen(5000, () => console.log("Server Open"));
 
 
