@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import { hash } from "bcrypt";
+import { hash, compare } from "bcrypt";
 
 
 // API request for getting all users from database
@@ -19,6 +19,8 @@ export const userSignup = async (req, res, next) => {
     try {
         // user signup
         const { name, email, password } = req.body;
+        const existingUser = await User.findOne({ email });
+        if (existingUser) return res.status(401).send("User already registered");
         const hashedPassword = await hash(password, 10);
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
@@ -31,3 +33,17 @@ export const userSignup = async (req, res, next) => {
     }
 };
 
+export const userLogin = async (req, res, next) => {
+    try {
+        // user login
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).send("User not registered");
+        }
+        const isPasswordCorrect = await compare(password, user.password);
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({ message: "ERROR", cause: error.message });
+    }
+};
