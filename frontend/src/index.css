@@ -9,6 +9,10 @@ html, body  {
   font-family: "Work-Sans", sans-serif;
 }
 
+.image-inverted {
+  filter: invert(100%);
+}
+
 
 
 
