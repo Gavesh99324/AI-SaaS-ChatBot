@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const NavigationLink = ({ to = "#", bg, textColor, text, onClick }) => {
   return (
     <Link
+    className='nav-link'
       to={to}
       onClick={onClick}
       style={{
