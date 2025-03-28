@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { loginUser } from '../helpers/api-communicator';
 
 
 // AuthContext provides: 
@@ -19,7 +20,13 @@ export const AuthProvider = ({ children }) => {
 
     }, []);
 
-    const login = async (email, password) => {};
+    const login = async (email, password) => {
+        const data = await loginUser(email, password);
+        if (data) {
+            setUser({ email: data.email, name: data.name });
+            setIsLoggedIn(true);
+        }
+    };
     const signup = async (name, email, password) => {};
     const logout = async () => {};
 
