@@ -10,7 +10,17 @@ const CustomizedInput = ({ name, type, label }) => {
     name={name} 
     type={type} 
     label={label} 
-    variant="outlined" 
+    variant="outlined"
+    slotProps={{
+      input: {
+        style: {
+          width: "300px",
+          borderRadius: "10px",
+          fontSize: 20,
+          color: 'white'
+        }
+      }
+    }}
     />
   )
 }

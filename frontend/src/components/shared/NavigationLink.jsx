@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 const NavigationLink = ({ to = "#", bg, textColor, text, onClick }) => {
   return (
@@ -21,5 +23,14 @@ const NavigationLink = ({ to = "#", bg, textColor, text, onClick }) => {
     </Link>
   );
 };
+
+NavigationLink.propTypes = {
+  to: PropTypes.string,
+  bg: PropTypes.string,
+  textColor: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
+
 
 export default NavigationLink;
