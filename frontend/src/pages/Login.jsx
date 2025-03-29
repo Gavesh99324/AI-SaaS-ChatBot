@@ -32,8 +32,8 @@ const Login = () => {
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
       <h1>Login</h1>
-      <Box padding={8} mt={8} sx={{ display:{ md: "flex", sm: "none", xs: "none"}}}>
-        <img src={Robot} alt="Robot" style={{ width: "400px" }} />
+      <Box padding={7} mt={7} sx={{ display:{ md: "flex", sm: "none", xs: "none"}}}>
+        <img src={Robot} alt="Robot" style={{ width: "300px" }} />
       </Box>
 
       <Box display={"flex"} flex={{ xs: 1, md: 0.5 }} justifyContent={'center'} alignItems={'center'} padding={2} ml={"auto"} mt={16}>
@@ -60,7 +60,7 @@ const Login = () => {
                       mt: 2, 
                       width: "300px", 
                       borderRadius: 2, 
-                      bgcolor: "#00fffc",
+                      bgcolor: "#90EE90",
                       ":hover": {
                         bgcolor: "white",
                         color: "black",

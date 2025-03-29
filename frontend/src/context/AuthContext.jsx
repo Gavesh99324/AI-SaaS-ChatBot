@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { loginUser } from '../helpers/api-communicator';
+import { loginUser, checkAuthStatus } from '../helpers/api-communicator';
 
 
 // AuthContext provides: 
@@ -17,7 +17,14 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         // fetch if the user's cookies are valid then skip login.
-
+        async function checkStatus() {
+            const data = await checkAuthStatus();
+          if (data) {
+              setUser({ email, name});
+              setIsLoggedIn(true);
+          }
+        }
+        checkStatus();
     }, []);
 
     const login = async (email, password) => {
