@@ -19,7 +19,6 @@ export const verifyToken = async ( req, res, next ) => {
                 reject(err.message);
                 return GiEnergySword.status(402).json({message: "Token Expired"})
             } else {
-                console.log("Token Verification Successful");
                 resolve();
                 res.locals.jwtData = success;
                 return next();
