@@ -1,76 +1,108 @@
-
 /*
-import OpenAI from "openai";
 
-export const generateChatCompletion = async ( req, res, next ) => {
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import User from "../models/User.js";
+
+export const generateChatCompletion = async (req, res) => {
     const { message } = req.body;
-    try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user) 
-            return res
-                .status(401)
-                .json({ message: "User not registered OR Token malfunctioned" });
-    
-    // grab chats of user
-    const chats = user.chats.map(({role, content}) => ({ role, content }));
-    chats.push({ content: message, role: "user" });
-    user.chats.push({ content: message, role: "user" });
-    
-    // send all chats with new one to openAI API
-    const config = configureOpenAI();
-    const openai = new OpenAIApi(config);
 
-    // get latest response
-    const chatResponse = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: chats,
-    });
-    user.chats.push(chatResponse.data.choices[0].message);
-    await user.save();
-    return res.status(200).json({ chats: user.chats });
+    try {
+        // Ensure user authentication
+        const userId = res.locals?.jwtData?.id;
+        if (!userId) {
+            return res.status(401).json({ message: "User not authenticated or Token malfunctioned" });
+        }
+
+        // Fetch user from database
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Store user message in chat history
+        user.chats.push({ role: "user", content: message });
+
+        // Initialize Gemini API
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_SECRET_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+        // Prepare chat history for better AI responses
+        const chatHistory = user.chats.map(({ role, content }) => ({
+            role,
+            parts: [{ text: content }]
+        }));
+
+        // Get AI response
+        const result = await model.generateContent({
+            contents: [...chatHistory, { role: "user", parts: [{ text: message }] }]
+        });
+
+        const responseText = result.response?.text() || "I'm sorry, I couldn't process that request.";
+
+        // Store AI response in chat history
+        user.chats.push({ role: "assistant", content: responseText });
+        await user.save(); // Save updates
+
+        // Return full chat history
+        return res.status(200).json({ chats: user.chats });
+
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: 'Something went wrong'});
+        console.error("Chat Generation Error:", error);
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
 
 */
 
 
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import User from "../models/User.js";
 
-export const generateChatCompletion = async (req, res, next) => {
+export const generateChatCompletion = async (req, res) => {
     const { message } = req.body;
 
     try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user)
-            return res
-                .status(401)
-                .json({ message: "User not registered OR Token malfunctioned" });
+        // Ensure user authentication
+        const userId = res.locals?.jwtData?.id;
+        if (!userId) {
+            return res.status(401).json({ message: "User not authenticated or Token malfunctioned" });
+        }
 
-        const chats = user.chats.map(({ role, content }) => ({ role, content }));
-        chats.push({ content: message, role: "user" });
-        user.chats.push({ content: message, role: "user" });
+        // Fetch user from database
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Store user message in chat history (optional)
+        user.chats.push({ role: "user", content: message });
 
         // Initialize Gemini API
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_SECRET_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-        const chat = model.startChat();
-        const chatResponse = await chat.sendMessage(message);
+        // Prepare chat history (optional)
+        const chatHistory = user.chats.map(({ role, content }) => ({
+            role,
+            parts: [{ text: content }]
+        }));
 
-        const responseText = chatResponse.response.text(); // Extract response
+        // Get AI response
+        const result = await model.generateContent({
+            contents: [...chatHistory, { role: "user", parts: [{ text: message }] }]
+        });
+
+        const responseText = result.response?.text() || "I'm sorry, I couldn't process that request.";
+
+        // Store AI response in chat history (optional)
         user.chats.push({ role: "assistant", content: responseText });
+        await user.save(); // Save updates
 
-        await user.save();
-        return res.status(200).json({ chats: user.chats });
+        // ✅ Only return the latest AI response instead of the full chat history
+        return res.status(200).json({ response: responseText });
 
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Something went wrong" });
+        console.error("Chat Generation Error:", error);
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
-
-

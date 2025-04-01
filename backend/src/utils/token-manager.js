@@ -1,4 +1,8 @@
-import jwt from 'jsonwebtoken'; 
+import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
+
+config();
+const COOKIE_NAME = process.env.COOKIE_NAME || "auth-token";
 
 export const createToken = ( id, email, expiresIn ) => {
     const payload = { id, email };
