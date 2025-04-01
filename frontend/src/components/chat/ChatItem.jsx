@@ -8,7 +8,7 @@ function ChatItem({ content, role }) {
     const auth = useAuth();
 
   return role === "assistant" ? (
-    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(0, 77, 86, 0.5)", my: 2, gap: 2 }}
+    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(255, 255, 255, 0.1)", my: 2, gap: 2 }}
     >
       <Avatar sx={{ ml: "0" }}>
         <img src={Logo} alt="neurabot" width={"30px"} />

@@ -16,13 +16,13 @@ const Header = () => {
       <div>
         {auth.isLoggedIn ? (
            <>
-             <NavigationLink to="/chat" bg="#F8F8FF" textColor="black" text="Go To Chat" />
-             <NavigationLink to="/" bg="#90EE90" textColor="white" text="logout" onClick={auth.logout} />
+             <NavigationLink to="/chat" bg="#fff" textColor="black" text="Go To Chat" />
+             <NavigationLink to="/" bg="#2c2c2c" textColor="white" text="logout" onClick={auth.logout} />
            </> 
           ) : ( 
             <>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-             <NavigationLink to="/login" bg="#F8F8FF " textColor="black" text="Login" />
-             <NavigationLink to="/signup" bg="#90EE90" textColor="white" text="Signup" />
+             <NavigationLink to="/login" bg="#fff " textColor="black" text="Login" />
+             <NavigationLink to="/signup" bg="#2c2c2c" textColor="white" text="Signup" />
             </> 
             )}
       </div>

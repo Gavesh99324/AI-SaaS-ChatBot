@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useRef } from 'react';
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { red, orange } from '@mui/material/colors';
@@ -16,7 +16,14 @@ const chatMessages = [
 
 
 const Chat = () => {
+
+  const inputRef = useRef(null);
+
+
   const auth = useAuth();
+  const handleSubmit = async () => {
+    console.log(inputRef.current?.value)
+  }
 
   return (
     <Box sx={{ display: "flex", flex: 1, width: "100%", height: "100%", mt: 3, gap: 3, paddingBottom: "60px" }}>
@@ -46,11 +53,13 @@ const Chat = () => {
               <ChatItem content={chat.content} role={chat.role} key={index}/> 
             ))}
         </Box>
-        <div style={{ width: "90%", marginBottom: "60px", marginTop: "auto", padding: "10px", borderRadius: 16, backgroundColor: "rgb(17, 29, 39", display: "flex", margin: "auto", flexDirection: "column"}}
-        >
+        <div style={{ width: "90%", marginBottom: "60px", marginTop: "auto", padding: "10px", borderRadius: 16, backgroundColor: "rgb(17, 29, 39)", display: "flex", margin: "auto", flexDirection: "column"}}
+        > 
           {" "}
-          <input type='text' style={{ width: "90%", height: "10px", backgroundColor: "transparent", marginBottom: "20px", padding: "5px", border: "none", outline: "none", color: "white", fontSize: "15px" }} />
-          <IconButton sx={{ ml: "auto", color: "white" }}><IoMdSend /></IconButton>
+          <input ref={inputRef} type='text' style={{ width: "90%", height: "10px", backgroundColor: "transparent", marginBottom: "20px", padding: "5px", border: "none", outline: "none", color: "white", fontSize: "15px" }} />
+          <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white" }}>
+            <IoMdSend />
+          </IconButton>
         </div>
       </Box>
     </Box>
