@@ -1,3 +1,4 @@
+/*
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -6,3 +7,10 @@ const openai = new OpenAI({
 });
 
 export default openai;
+*/
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_SECRET_KEY);
+export default genAI;
+
