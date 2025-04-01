@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import Robot from '../../src/assets/robot_p.png';
@@ -42,7 +43,7 @@ const Login = () => {
            style={{ 
               margin: 'auto', 
               padding: '30px', 
-              boxShadow: "10px 10px 20px #000", 
+              boxShadow: "10px 10px 20px rgba(0, 170, 190, 0.5)", 
               borderRadius: "10px", 
               border: "none", 
             }}
@@ -60,7 +61,7 @@ const Login = () => {
                       mt: 2, 
                       width: "300px", 
                       borderRadius: 2, 
-                      bgcolor: "#90EE90",
+                      bgcolor: "rgba(0, 170, 190, 0.6)",
                       ":hover": {
                         bgcolor: "white",
                         color: "black",
@@ -80,3 +81,92 @@ const Login = () => {
 export default Login;
 
 
+
+
+
+/*
+
+
+
+import React from 'react';
+import { Box, Typography, Button } from '@mui/material';
+import CustomizedInput from '../components/shared/CustomizedInput';
+import { IoLogIn } from "react-icons/io5";
+import { toast } from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
+import '../animation/animation.css';
+
+
+const Login = () => {
+  const auth = useAuth();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      toast.loading("Signing In", { id: "login" });
+      await auth?.login(email, password);
+      toast.success("Signed In Successfully", { id: "login" });
+    } catch (error) {
+      console.log(error);
+      toast.error("Signing In Failed", { id: "login" });
+    }
+  };
+
+  return (
+    <Box width="100%" height="100vh" display="flex" alignItems="center" justifyContent="center" position="relative" bgcolor="#000">
+      <div className="container">
+        {[...Array(21)].map((_, i) => (
+          <div key={i} className="circle" style={{ '--i': i }}></div>
+        ))}
+      </div>
+      
+      <Box display="flex" flex={1} justifyContent="center" alignItems="center" zIndex={1}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ 
+            padding: '30px', 
+            boxShadow: "10px 10px 20px rgba(0, 170, 190, 0.5)", 
+            borderRadius: "10px", 
+            border: "none", 
+            background: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }}>
+            <Typography variant="h4" textAlign="center" padding={2} fontWeight={600} color="#fff">
+              Login
+            </Typography>
+            <CustomizedInput type="email" name="email" label={"Email"} />
+            <CustomizedInput type="password" name="password" label={"Password"} />
+            <Button type='submit' 
+                    sx={{ 
+                      px: 2, 
+                      py: 1, 
+                      mt: 2, 
+                      width: "300px", 
+                      borderRadius: 2, 
+                      bgcolor: "rgba(0, 170, 190, 0.6)",
+                      color: "white",
+                      ":hover": {
+                        bgcolor: "white",
+                        color: "black",
+                      },
+                    }}
+                    endIcon={<IoLogIn />}
+                    >
+                    Login
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Box>
+  );
+};
+
+export default Login;
+
+
+*/
