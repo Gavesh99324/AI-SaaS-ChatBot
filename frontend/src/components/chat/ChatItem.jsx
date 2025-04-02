@@ -2,9 +2,47 @@ import React from 'react'
 import { Box, Avatar, Typography } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import Logo from '../../assets/Logo.png'; 
+import  { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+
+// Syntax colors
+import { coldarkCold } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
+
+function extractCodeFromString(message) {
+  if (message.includes("```")) {
+    const blocks = message.split("```");
+    return blocks;
+  }
+};
+
+function isCodeBlock(str) {
+  if (
+      str.includes("=") || 
+      str.includes(";") || 
+      str.includes("[") ||
+      str.includes("]") ||
+      str.includes("{") ||
+      str.includes("}") ||
+      str.includes("#") ||
+      str.includes("//") ||
+      str.includes("%") 
+   ) {
+    return true;
+  }
+  return false;
+}; 
+
+    
 function ChatItem({ content, role }) {
+
+  const messageBlocks = extractCodeFromString(content);
+
     const auth = useAuth();
 
   return role === "assistant" ? (
@@ -14,10 +52,23 @@ function ChatItem({ content, role }) {
         <img src={Logo} alt="neurabot" width={"30px"} />
       </Avatar>
       <Box>
-        <Typography fontSize={"15px"}>{content}</Typography>
+        {!messageBlocks && (
+          <Typography sx={{fontSize: "12px"}}>{content}</Typography>
+        )}
+        {messageBlocks && 
+           messageBlocks.length && 
+           messageBlocks.map((block) => 
+              isCodeBlock(block) ? (
+                <SyntaxHighlighter style={dracula} language='javascript' wrapLongLines={true}>
+                  {block}
+                </SyntaxHighlighter>
+                ) : (
+                <Typography sx={{fontSize: "12px"}}>{block}</Typography>
+              )
+            )}
       </Box>
     </Box>
-  ) : (
+  ) : (  
     <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(0, 77, 86, 0.1)", my: 2, gap: 2, borderRadius: "10px" }}
     >
       <Avatar sx={{ ml: "0", bgcolor: "black", color: "white"}}>
@@ -25,7 +76,7 @@ function ChatItem({ content, role }) {
       { auth?.user?.name.split(" ")[1][0] }
       </Avatar>
       <Box>
-        <Typography fontSize={"15px"}>{content}</Typography>
+        <Typography fontSize={"12px"}>{content}</Typography>
       </Box>
     </Box>
   );
