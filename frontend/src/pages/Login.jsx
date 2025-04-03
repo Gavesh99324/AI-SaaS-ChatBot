@@ -1,16 +1,19 @@
 
-import React from 'react';
+import React , { useEffect} from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import Robot from '../../src/assets/robot_p.png';
 import CustomizedInput from '../components/shared/CustomizedInput';
 import { IoLogIn } from "react-icons/io5";
 import { toast } from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 const Login = () => {
-  
+  const navigate = useNavigate();
+
   const auth = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +31,12 @@ const Login = () => {
       toast.error("Signing In Failed", { id: "login" });
     }
   };
+
+  useEffect(() => {
+    if (!auth?.user) {
+      return navigate("/chat")
+    } 
+  }, [])
 
   console.log("Robot Image Path:", Robot);
   return (
