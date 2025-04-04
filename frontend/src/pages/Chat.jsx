@@ -84,7 +84,7 @@ const Chat = () => {
   }, [auth]);
 
   useEffect(() => {
-    if (!auth?.user) {
+    if (!auth?.isLoggedIn) {
       return navigate("/login");
     }
   }, [auth])

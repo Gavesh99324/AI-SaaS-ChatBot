@@ -3,6 +3,9 @@ import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
 import { createToken } from "../utils/token-manager.js";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 // API request for getting all users from the database
 export const getAllUsers = async (req, res) => {
     try {
