@@ -11,8 +11,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const inputRef = useRef(null);
   const auth = useAuth();
   const [chatMessages, setChatMessages] = useState([]);
@@ -54,15 +53,16 @@ const Chat = () => {
     }
   };
 
-  const handleDeleteChats = async (id) => {
+  const handleDeleteChats = async () => {
     try {
       toast.loading("Deleting Chats", { id: "deletechats" });
       await deleteUserChats();
       setChatMessages([]);
+      localStorage.removeItem("chatMessages");
       toast.success("Successfully deleted chats", { id: "deletechats" });
     } catch (error) {
       console.log(error);
-      toast.error("Deleting Failed", { id: "deletechats" }); 
+      toast.error("Deleting Failed", { id: "deletechats" });
     }
   };
 
@@ -87,7 +87,7 @@ const Chat = () => {
     if (!auth?.isLoggedIn) {
       return navigate("/login");
     }
-  }, [auth])
+  }, [auth]);
 
   return (
     <Box sx={{ display: "flex", flex: 1, width: "100%", height: "100%", mt: 3, gap: 3, paddingBottom: "60px" }}>
@@ -111,11 +111,12 @@ const Chat = () => {
           </Button>
         </Box>
       </Box>
+
       <Box sx={{ display: "flex", flex: { md: 0.8, xs: 1, sm: 1 }, flexDirection: "column", px: 3 }}>
         <Typography sx={{ fontSize: "40px", color: "white", mb: 2, mx: "auto", fontWeight: "600" }}>How Can I Help You?</Typography>
         <Box sx={{ width: "90%", borderRadius: 3, mx: "auto", display: "flex", flexDirection: "column", overflowY: "auto" }}>
           {chatMessages.map((chat, index) => (
-            <ChatItem content={chat.content} role={chat.role} key={index} />
+            <ChatItem key={index} content={chat.content} role={chat.role} />
           ))}
         </Box>
         <div style={{ width: "90%", marginBottom: "20px", marginTop: "auto", padding: "10px", borderRadius: 16, backgroundColor: "rgb(17, 27, 39)", display: "flex", alignItems: "center" }}>

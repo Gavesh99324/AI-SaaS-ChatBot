@@ -12,7 +12,10 @@ export const createToken = ( id, email, expiresIn ) => {
     return token;
 };
 
+
+/*
 export const verifyToken = async ( req, res, next ) => {
+    
     const token = req.signedCookies[`${COOKIE_NAME}`];
     if (!token || token.trim() === "") {
         return res.status(401).json({ message: "Token Not Received" })
@@ -31,3 +34,20 @@ export const verifyToken = async ( req, res, next ) => {
     }); 
 };
 
+*/
+
+export const verifyToken = (req, res, next) => {
+    const token = req.signedCookies[COOKIE_NAME];
+
+    if (!token || token.trim() === "") {
+        return res.status(401).json({ message: "Token Not Received" });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.locals.jwtData = decoded;
+        return next();
+    } catch (err) {
+        return res.status(401).json({ message: "Token Invalid or Expired" });
+    }
+};

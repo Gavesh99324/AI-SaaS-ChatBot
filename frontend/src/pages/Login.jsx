@@ -34,9 +34,9 @@ const Login = () => {
 
   useEffect(() => {
     if (!auth?.user) {
-      return navigate("/chat")
+      return navigate("/login")
     } 
-  }, [])
+  }, [auth?.user])
 
   console.log("Robot Image Path:", Robot);
   return (

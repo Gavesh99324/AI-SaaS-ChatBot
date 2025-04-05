@@ -6,6 +6,9 @@ import { createToken } from "../utils/token-manager.js";
 import dotenv from "dotenv";
 dotenv.config();
 
+const COOKIE_NAME = "auth_token";
+
+
 // API request for getting all users from the database
 export const getAllUsers = async (req, res) => {
     try {
