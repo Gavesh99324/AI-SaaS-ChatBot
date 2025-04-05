@@ -1,5 +1,4 @@
 
-
 import axios from "axios";
 
 const API_BASE_URL = "http://localhost:5000";
@@ -18,6 +17,22 @@ export const loginUser = async (email, password) => {
     } catch (error) {
         console.error("Login error:", error);
         throw new Error("Unable to login");
+    }
+}
+
+export const signUpUser = async (name, email, password) => {
+    try {
+        const res = await axios.post('/user/signup', {name, email, password });
+        if (res.status !== 200) {
+            throw new Error("Unable to signup");
+        }
+        const data = res.data;
+        // Save the token if login is successful
+        localStorage.setItem("authToken", data.token); // Assuming the token is returned from the login response
+        return data;
+    } catch (error) {
+        console.error("Login error:", error);
+        throw new Error("Unable to signup");
     }
 }
 

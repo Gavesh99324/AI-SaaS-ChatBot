@@ -1,7 +1,7 @@
 
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { loginUser, checkAuthStatus, logOutUser } from '../helpers/api-communicator';
+import { loginUser, checkAuthStatus, logOutUser, signUpUser } from '../helpers/api-communicator';
 
 // AuthContext provides: 
 // - isLoggedIn (boolean)
@@ -43,6 +43,16 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (name, email, password) => {
         // Signup functionality can be implemented here
+        try {
+            const data = await signUpUser(name, email, password);
+            if (data) {
+                setUser({ email: data.email, name: data.name });
+                setIsLoggedIn(true);
+            }
+        } catch (error) {
+            console.error("Signup error:", error);
+            // Handle login failure (e.g., show an error message)
+        }
     };
 
     const logout = async () => {

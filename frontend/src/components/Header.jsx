@@ -22,7 +22,7 @@ const Header = () => {
           ) : ( 
             <>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
              <NavigationLink to="/login" bg="#fff " textColor="black" text="Login" />
-             <NavigationLink to="/signup" bg="#2c2c2c" textColor="white" text="Signup" />
+             <NavigationLink to="/signup" bg="#2c2c2c" textColor="white" text="Sign Up" />
             </> 
             )}
       </div>
@@ -32,5 +32,6 @@ const Header = () => {
 }
 
 export default Header;
+
 
 
