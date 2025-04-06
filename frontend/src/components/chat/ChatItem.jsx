@@ -1,12 +1,11 @@
 
-
 import React from 'react';
 import { Box, Avatar, Typography } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import Logo from '../../assets/Logo.png';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-// Syntax colors
+
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function extractCodeFromString(message) {

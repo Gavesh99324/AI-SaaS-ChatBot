@@ -9,8 +9,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 
-
-
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -23,27 +21,27 @@ const Signup = () => {
     const password = formData.get("password");
 
     try {
-      toast.loading("Signing In", {id: "login"})
+      toast.loading("Signing In", {id: "signup"})
       await auth?.signup(name, email, password);
-      toast.success("Signed In Successfully", { id: "login" });
+      toast.success("Signed In Successfully", { id: "signup" });
 
     } catch (error) {
       console.log(error)
-      toast.error("Signing In Failed", { id: "login" });
+      toast.error("Signing In Failed", { id: "signup" });
     }
   };
 
   useEffect(() => {
     if (!auth?.user) {
-      return navigate("/login")
+      return navigate("/signup")
     } 
   }, [auth?.user])
 
   console.log("Robot Image Path:", Robot);
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
-      <h1>Login</h1>
-      <Box padding={7} mt={7} sx={{ display:{ md: "flex", sm: "none", xs: "none"}}}>
+      
+      <Box padding={7} mt={7} mr={5} sx={{ display:{ md: "flex", sm: "none", xs: "none"}}}>
         <img src={Robot} alt="Robot" style={{ width: "300px" }} />
       </Box>
 
@@ -55,7 +53,8 @@ const Signup = () => {
               padding: '30px', 
               boxShadow: "10px 10px 20px rgba(0, 170, 190, 0.5)", 
               borderRadius: "10px", 
-              border: "none", 
+              border: "none",
+              backgroundColor: "#05101c",
             }}
         >
           <Box sx={{ display: 'flex', flexDirection:"column", justifyContent: "center" }}>

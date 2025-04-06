@@ -24,11 +24,11 @@ const Login = () => {
     try {
       toast.loading("Signing In", {id: "login"})
       await auth?.login(email, password);
-      toast.success("Signed In Successfully", { id: "login" });
+      toast.success("Logged In Successfully", { id: "login" });
 
     } catch (error) {
       console.log(error)
-      toast.error("Signing In Failed", { id: "login" });
+      toast.error("Logged In Failed", { id: "login" });
     }
   };
 
@@ -41,7 +41,7 @@ const Login = () => {
   console.log("Robot Image Path:", Robot);
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
-      <h1>Login</h1>
+      
       <Box padding={7} mt={7} sx={{ display:{ md: "flex", sm: "none", xs: "none"}}}>
         <img src={Robot} alt="Robot" style={{ width: "300px" }} />
       </Box>
@@ -55,6 +55,7 @@ const Login = () => {
               boxShadow: "10px 10px 20px rgba(0, 170, 190, 0.5)", 
               borderRadius: "10px", 
               border: "none", 
+              backgroundColor: "#05101c",
             }}
         >
           <Box sx={{ display: 'flex', flexDirection:"column", justifyContent: "center" }}>

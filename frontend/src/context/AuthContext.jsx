@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Check if the user's token is valid when the component mounts
+        
         async function checkStatus() {
             const data = await checkAuthStatus();
             if (data) {
@@ -37,12 +37,12 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (error) {
             console.error("Login error:", error);
-            // Handle login failure (e.g., show an error message)
+            
         }
     };
 
     const signup = async (name, email, password) => {
-        // Signup functionality can be implemented here
+        
         try {
             const data = await signUpUser(name, email, password);
             if (data) {
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (error) {
             console.error("Signup error:", error);
-            // Handle login failure (e.g., show an error message)
+            
         }
     };
 
@@ -60,10 +60,10 @@ export const AuthProvider = ({ children }) => {
             await logOutUser();
             setIsLoggedIn(false);
             setUser(null);
-            window.location.reload(); // Optionally reload the page after logout
+            window.location.reload(); 
         } catch (error) {
             console.error("Logout error:", error);
-            // Handle logout failure (e.g., show an error message)
+            
         }
     };
 

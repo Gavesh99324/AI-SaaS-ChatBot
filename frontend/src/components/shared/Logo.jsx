@@ -8,9 +8,9 @@ const Logo = () => {
   return (
     <div style={{ display: 'flex', marginRight: 'auto', marginTop: '10px', alignItems: 'center', gap: '15px' }}>
       <Link to={"/"} style={{ display: 'flex', alignItems: 'center' }}>
-        {/* Outer Circle (Rotating) */}
+       
         <svg className="logo-animation" width="75px" height="75px" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Outer Circuits (Rotating) */}
+          
           <g className="outer-circuits">
             <circle cx="100" cy="100" r="80" stroke="url(#gradient)" strokeWidth="2" fill="none" />
             <circle cx="25" cy="100" r="5" fill="url(#gradient)" />
@@ -19,10 +19,10 @@ const Logo = () => {
             <circle cx="100" cy="175" r="5" fill="url(#gradient)" />
           </g>
 
-          {/* Place the HeaderLogo inside the circle */}
+          
           <image href={HeaderLogo} x="50" y="50" width="100px" height="100px" clipPath="url(#circleClip)" />
 
-          {/* Gradient Definition */}
+          
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#FF0080" />
@@ -36,14 +36,14 @@ const Logo = () => {
         </svg>
       </Link>
 
-      {/* NeuraBot Title */}
+      
       <Typography
         sx={{
           display: { md: "block", sm: "none", xs: "none" },
           mr: "auto", fontWeight: "800",
           textShadow: "2px 2px 2px #000"
         }}>
-        <span style={{ fontSize: "20px" }}>NeuraBot</span>
+        <span style={{ fontSize: "24px" }}>NeuraBot</span>
       </Typography>
     </div>
   );

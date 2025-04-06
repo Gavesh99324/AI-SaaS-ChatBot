@@ -1,7 +1,7 @@
 
 
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
-import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Button, IconButton, Typography, CircularProgress } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { red, orange } from "@mui/material/colors";
 import ChatItem from "../components/chat/ChatItem";
@@ -9,14 +9,16 @@ import { IoMdSend } from "react-icons/io";
 import { deleteUserChats, getUserChats, sendChatRequest } from "../helpers/api-communicator";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import '../animation/Spinner.css'
 
 const Chat = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const auth = useAuth();
   const [chatMessages, setChatMessages] = useState([]);
+  const [loading, setLoading] = useState(false); 
 
-  // Load chats from localStorage when the component mounts
+  
   useEffect(() => {
     const savedChats = localStorage.getItem("chatMessages");
     if (savedChats) {
@@ -33,9 +35,11 @@ const Chat = () => {
     const newMessage = { role: "user", content };
     setChatMessages((prev) => {
       const updatedChats = [...prev, newMessage];
-      localStorage.setItem("chatMessages", JSON.stringify(updatedChats)); // Save to localStorage
+      localStorage.setItem("chatMessages", JSON.stringify(updatedChats)); 
       return updatedChats;
     });
+
+    setLoading(true); 
 
     try {
       const chatData = await sendChatRequest(content);
@@ -44,12 +48,14 @@ const Chat = () => {
         const botMessage = { role: "assistant", content: chatData.response };
         setChatMessages((prev) => {
           const updatedChats = [...prev, botMessage];
-          localStorage.setItem("chatMessages", JSON.stringify(updatedChats)); // Save to localStorage
+          localStorage.setItem("chatMessages", JSON.stringify(updatedChats)); 
           return updatedChats;
         });
       }
     } catch (error) {
       console.error("Chat API error:", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -73,7 +79,7 @@ const Chat = () => {
       getUserChats()
         .then((data) => {
           setChatMessages([...data.chats]);
-          localStorage.setItem("chatMessages", JSON.stringify(data.chats)); // Save API response to localStorage
+          localStorage.setItem("chatMessages", JSON.stringify(data.chats)); 
           toast.success("Successfully loaded chats", { id: "localhost" });
         })
         .catch((err) => {
@@ -118,6 +124,12 @@ const Chat = () => {
           {chatMessages.map((chat, index) => (
             <ChatItem key={index} content={chat.content} role={chat.role} />
           ))}
+
+          {loading && (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+              <CircularProgress sx={{ color: "white" }} /> 
+            </Box>
+          )}
         </Box>
         <div style={{ width: "90%", marginBottom: "20px", marginTop: "auto", padding: "10px", borderRadius: 16, backgroundColor: "rgb(17, 27, 39)", display: "flex", alignItems: "center" }}>
           <input
