@@ -7,7 +7,7 @@ const TypingAnim = () => {
       sequence={[
         'Chat With NeuraBot Your Own AI Assistant',
         1000, 
-        'Built With OpenAI API 🤖',
+        'Built With Gemini API 🤖',
         2000,
         'NeuraBot is Customized AI Bot 💻',
         1500,
