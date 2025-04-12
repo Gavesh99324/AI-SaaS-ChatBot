@@ -35,13 +35,13 @@ function ChatItem({ content, role }) {
   const auth = useAuth();
 
   return role === "assistant" ? (
-    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(255, 255, 255, 0.1)", my: 2, gap: 2 }}>
+    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(21, 21, 21, 0.5)", my: 2, gap: 2 }}>
       <Avatar sx={{ ml: "0" }}>
         <img src={Logo} alt="neurabot" width={"30px"} />
       </Avatar>
       <Box>
         {!messageBlocks.length ? (
-          <Typography sx={{ fontSize: "12px" }}>{content}</Typography>
+          <Typography sx={{ fontSize: "12px", color: "white" }}>{content}</Typography>
         ) : (
           messageBlocks.map((block, index) =>
             isCodeBlock(block) ? (
@@ -58,13 +58,13 @@ function ChatItem({ content, role }) {
       </Box>
     </Box>
   ) : (
-    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(0, 77, 86, 0.1)", my: 2, gap: 2, borderRadius: "10px" }}>
+    <Box sx={{ display: "flex", p: 2, bgcolor: "rgba(0, 77, 86, 0.3)", my: 2, gap: 2, borderRadius: "10px" }}>
       <Avatar sx={{ ml: "0", bgcolor: "black", color: "white" }}>
         {auth?.user?.name[0] || "?"}
         {auth?.user?.name.split(" ")[1][0]}
       </Avatar>
       <Box>
-        <Typography fontSize={"12px"}>{content}</Typography>
+        <Typography fontSize={"16px"} sx={{ color: "black" }}>{content}</Typography>
       </Box>
     </Box>
   );
