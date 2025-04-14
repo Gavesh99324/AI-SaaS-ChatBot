@@ -28,11 +28,13 @@ const Chat = () => {
     }
   }, []);
 
+
   const handleSubmit = async () => {
     const content = inputRef.current?.value.trim();
     if (!content) return;
   
     inputRef.current.value = "";
+    const message = content;  //
   
     const newMessage = { role: "user", content };
     setChatMessages((prev) => {
@@ -44,7 +46,7 @@ const Chat = () => {
     setLoading(true);
   
     try {
-      const chatData = await sendChatRequest(content, provider); // dynamic!
+      const chatData = await sendChatRequest(message, model); // dynamic!
 
   
       if (chatData.response) {
@@ -61,7 +63,8 @@ const Chat = () => {
       setLoading(false);
     }
   };
-  
+
+
 
   const handleDeleteChats = async () => {
     try {

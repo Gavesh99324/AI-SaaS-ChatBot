@@ -13,22 +13,21 @@ export const getAPIKey = (model) => {
 
   // controllers/getAPIKey.js
 
-function getAPIKey(provider) {
-  if (provider === "gemini") {
-    if (!process.env.GEMINI_SECRET_KEY) {
-      throw new Error("GEMINI_SECRET_KEY is missing from environment variables");
+  export function getAPIKey(model) {
+    if (model === "gemini") {
+      if (!process.env.GEMINI_SECRET_KEY) {
+        throw new Error("GEMINI_SECRET_KEY is missing from environment variables");
+      }
+      return process.env.GEMINI_SECRET_KEY;
     }
-    return process.env.GEMINI_SECRET_KEY;
-  }
-
-  if (provider === "deepseek") {
-    if (!process.env.DEEPSEEK_SECRET_KEY) {
-      throw new Error("DEEPSEEK_SECRET_KEY is missing from environment variables");
+  
+    if (model === "deepseek") {
+      if (!process.env.DEEPSEEK_SECRET_KEY) {
+        throw new Error("DEEPSEEK_SECRET_KEY is missing from environment variables");
+      }
+      return process.env.DEEPSEEK_SECRET_KEY;
     }
-    return process.env.DEEPSEEK_SECRET_KEY;
+  
+    throw new Error("Invalid provider specified");
   }
-
-  throw new Error("Invalid provider specified");
-}
-
-module.exports = getAPIKey;
+  
