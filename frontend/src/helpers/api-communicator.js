@@ -61,19 +61,34 @@ export const checkAuthStatus = async () => {
     }
 }
 
+// content, provider -> message, model
+export const sendChatRequest = async (message, model) => {
+    const token = localStorage.getItem("authToken");
 
-export const sendChatRequest = async (message) => {
     try {
-        const res = await axios.post("/chat/new", { message });
+        const res = await axios.post(
+            "http://localhost:5000/api/v1/chat/new",
+            { message, model }, // ✅ Correct payload
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
         if (res.status !== 200) {
             throw new Error("Unable to send chat request");
         }
+
         return res.data;
     } catch (error) {
         console.error("Chat request error:", error);
         throw new Error("Unable to send chat request");
     }
-}
+};
+
+
 
 export const getUserChats = async () => {
     try {

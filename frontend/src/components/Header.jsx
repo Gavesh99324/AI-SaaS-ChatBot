@@ -6,6 +6,9 @@ import Logo from './shared/Logo';
 import { useAuth } from '../context/AuthContext';
 import NavigationLink from './shared/NavigationLink';
 
+import { motion } from 'framer-motion';
+
+
 const Header = () => {
   const auth = useAuth();
 
@@ -16,12 +19,12 @@ const Header = () => {
       <div>
         {auth.isLoggedIn ? (
            <>
-             <NavigationLink to="/chat" bg="#fff" textColor="black" text="Go To Chat" />
+             <NavigationLink to="/chat" bg="#2c2c2c" textColor="white" text="Go To Chat" />
              <NavigationLink to="/" bg="#2c2c2c" textColor="white" text="logout" onClick={auth.logout} />
            </> 
           ) : ( 
             <>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-             <NavigationLink to="/login" bg="#fff " textColor="black" text="Login" />
+             <NavigationLink to="/login" bg="#2c2c2c " textColor="white" text="Login" />
              <NavigationLink to="/signup" bg="#2c2c2c" textColor="white" text="Sign Up" />
             </> 
             )}
